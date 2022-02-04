@@ -4,7 +4,7 @@ DVC_REMOTE := ${GDRIVE_FOLDER}/${REPO_NAME}
 
 .PHONY:test
 test:
-	pytest
+	poetry run python -m pytest
 
 .PHONY:install-hooks
 install-hooks:
@@ -12,7 +12,7 @@ install-hooks:
 
 .PHONY:tensorboard
 tensorboard:
-	tensorboard --logdir=runs
+	poetry run tensorboard --logdir=runs
 
 .PHONY:dvc
 dvc:
@@ -21,8 +21,8 @@ dvc:
 
 .PHONY: mlflow
 mlflow:
-	mlflow ui
+	poetry run mlflow ui
 
 .PHONY: prefect
 prefect:
-	prefect server start --use-volume
+	poetry run prefect server start --use-volume
