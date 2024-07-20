@@ -1,5 +1,5 @@
 #!/bin/bash
 set -xeuf -o pipefail
 
-poetry install
+mamba env create -f environment.yml
 pre-commit install

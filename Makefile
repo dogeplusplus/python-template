@@ -1,10 +1,13 @@
 REPO_NAME := $(shell basename `git rev-parse --show-toplevel`)
 DVC_REMOTE := ${GDRIVE_FOLDER}/${REPO_NAME}
 
+.PHONY:install
+install:
+	./firstTimeSetup.sh
 
 .PHONY:test
 test:
-	poetry run python -m pytest
+	python -m pytest
 
 .PHONY:install-hooks
 install-hooks:
@@ -12,17 +15,21 @@ install-hooks:
 
 .PHONY:tensorboard
 tensorboard:
-	poetry run tensorboard --logdir=runs
+	tensorboard --logdir=runs
 
 .PHONY:dvc
 dvc:
 	dvc init
 	dvc remote add --default gdrive ${DVC_REMOTE}
 
-.PHONY: mlflow
-mlflow:
-	poetry run mlflow ui
+.PHONY:profile
+profile:
+	python -m cProfile -o profile.prof main.py
 
-.PHONY: prefect
-prefect:
-	poetry run prefect server start --use-volume
+.PHONY:format
+format:
+	ruff format
+
+.PHONY:lint
+lint:
+	ruff lint
